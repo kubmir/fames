@@ -1,0 +1,11 @@
+{
+    // Instructs VS Code to use typescript from node's dependencies (it is newer version than VS Code currently has).
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "bin": true,
+        "dist": true,
+        "node_modules": true
+    }
+}

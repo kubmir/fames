@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+
+            // It is possible to run typescript file directly in node.js, when source maps are correctly generated for server .js files.
+            "program": "${workspaceRoot}/src/server/server.ts",
+            "cwd": "${workspaceRoot}",
+
+            // Allows to debug typescript files through its source maps generated for .js files.
+            "sourceMaps": true,
+
+            // Points VS Code to location where generated .js files are stored in order to allow typescript debugging.
+            "outFiles": [
+                "${workspaceRoot}/bin/**/*.js"
+            ],
+
+            "skipFiles": [
+                "${workspaceRoot}/bin/**/*.*",
+                "${workspaceRoot}/node_modules/**/*.*"
+            ],
+
+            "preLaunchTask": "default"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "version": "0.1.0",
+    "command": "powershell",
+    "isShellCommand": true,
+    "args": [ "-Command" ],
+    "showOutput": "always",
+    "tasks": [
+        {
+            "taskName": "default",
+            "args": [ ".\\node_modules\\.bin\\gulp", "default" ],
+            "suppressTaskName": true,
+            "isBuildCommand": true,
+            "problemMatcher": "$gulp-tsc"
+        }
+    ]
+}
