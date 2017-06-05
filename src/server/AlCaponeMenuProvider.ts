@@ -7,7 +7,7 @@ export default class AlCaponeMenuProvider {
     public getMenu(): Promise<Dish[]> {
         return new Promise<Dish[]>((resolve, reject) => {
             axios
-                .get('http://www.pizzaalcapone.cz/poledni-menu.html')
+                .get('http://www.pizzaalcapone.cz/brno/poledni-menu')
                 .then((alCaponeResponse: Axios.AxiosXHR<string>) => {
                     const dishes = this.extractDishes(alCaponeResponse);
 
@@ -16,17 +16,6 @@ export default class AlCaponeMenuProvider {
                 .catch(exception => reject(exception));
         });
     }
-
-    private getDayName(dayNumber: number): string {
-        switch (dayNumber) {
-            case 1: return 'Pondělí';
-            case 2: return 'Úterý';
-            case 3: return 'Středa';
-            case 4: return 'Čtvrtek';
-            case 5: return 'Pátek';
-            default: throw 'Unexpected day, weekends are not supported';
-        }
-    };
 
     private extractDishes(alCaponeResponse: Axios.AxiosXHR<string>): Dish[] {
         // Allows to query returned page with jQuery syntax.
@@ -39,33 +28,27 @@ export default class AlCaponeMenuProvider {
     }
 
     private extractDishNames(alCaponeMenuPage: CheerioStatic): string[] {
-        // Day to find in page
-        const dayName = this.getDayName((new Date()).getDay());
-
-        // Dishes are stored as text in paragraph <p> which also contains name of requested day in <strong> element.
-        const paragraphWithDayNameAndDishes = alCaponeMenuPage(`.col-md-6.jt_col.column_container.col-lg-12 p strong:contains("${dayName}")`)
-            .parent();
+        // Dishes are stored as text in paragraph <p> with class .poledni-menu.active-day.
+        const paragraphWithDayNameAndDishes = alCaponeMenuPage(`p.poledni-menu.active-day`);
 
         // Paragraph contains name of the day on first line and names of dishes and empty lines on others.
-        // First, remove name of the day. Empty lines will be removed later.
-        const unformatedDishNames = paragraphWithDayNameAndDishes
-            .text()
-            .split('\r\n')
+        // Remove name of the day and tags. Empty lines will be removed later.
+        const unformatedDishNames = paragraphWithDayNameAndDishes[0].children
+            .filter((item) => item.type !== "tag")
             .splice(1);
 
         // Remove empty lines and return dish names.
         return unformatedDishNames
-            .map(value => value.trim())
+            .map(value => value.data.trim())
             .filter(text => text.length !== 0);
     }
 
     private extractPrices(alCaponeMenuPage: CheerioStatic): string[] {
-        // Al Capone menu has 5 items from which first and last do not have their prices because they are included to each dish.
-        // Therefore, their price stay empty, other prices will be set later in the method.
-        const priceList: string[] = ['', '', '', '', ''];
+        // Al Capone menu has 3 items.
+        const priceList: string[] = ['', '', ''];
 
         // Prices are stored in separate paragraph (<p>) that can be recognized only by its known content, which is text string 'Kč'.
-        const paragraphWithPriceList = alCaponeMenuPage('.col-md-6.jt_col.column_container.col-lg-12 p:contains("Kč")');
+        const paragraphWithPriceList = alCaponeMenuPage('p.poledni-menu:contains("Kč")');
 
         // Paragraph contains more text lines which are filtered since they do not contain 'Kč'.
         const lineWithPriceList = paragraphWithPriceList
