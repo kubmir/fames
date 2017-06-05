@@ -26,3 +26,8 @@ ReactDOM.render(
     <Menu restaurantName="Espaňola" restaurantId="16505872" />,
     document.getElementById("espanola")
 );
+
+ReactDOM.render(
+    <Menu restaurantName="Magistr" restaurantId="16506840" />,
+    document.getElementById("magistr")
+);
