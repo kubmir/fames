@@ -44,8 +44,8 @@ export default class AlCaponeMenuProvider {
     }
 
     private extractPrices(alCaponeMenuPage: CheerioStatic): string[] {
-        // Al Capone menu has 3 items.
-        const priceList: string[] = ['', '', ''];
+        // First item (soup) is present but it does not have its own price.
+        const priceList: string[] = [''];
 
         // Prices are stored in separate paragraph (<p>) that can be recognized only by its known content, which is text string 'Kč'.
         const paragraphWithPriceList = alCaponeMenuPage('p.poledni-menu:contains("Kč")');
@@ -67,8 +67,7 @@ export default class AlCaponeMenuProvider {
             .forEach((content, index) => {
                 const extractedAmount = content.match('Menu \\d - (.* Kč)')[1];
 
-                // Skip first item in the menu since it does not have its own price.
-                priceList[index + 1] = extractedAmount;
+                priceList.push(extractedAmount);
             });
 
         return priceList;
