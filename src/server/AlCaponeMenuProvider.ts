@@ -39,7 +39,7 @@ export default class AlCaponeMenuProvider {
 
         // Remove empty lines and return dish names.
         return unformatedDishNames
-            .map(value => value.data.trim())
+            .map((value: CheerioElement) => value.nodeValue.trim())
             .filter(text => text.length !== 0);
     }
 
