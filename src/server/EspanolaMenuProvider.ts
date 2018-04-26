@@ -11,7 +11,8 @@ export default class EspanolaMenuProvider {
                 .then((espanolaResponse: Axios.AxiosXHR<string>) => {
                     const dishes = this.extractDishes(espanolaResponse);
                     resolve(dishes);
-                });
+                })
+                .catch(exception => reject(exception))
         });
     }
 

@@ -4,6 +4,7 @@ import { Menu } from "./Menu";
 
 export const Menus: React.StatelessComponent<{}> = () => (
     <div className="col-md-10">
+        <Menu restaurantName="India" restaurantId="16511911" />
         <Menu restaurantName="Magistr" restaurantId="16506840" />
         <Menu restaurantName="U Dřeváka" restaurantId="16505458" />
         <Menu restaurantName="Al Capone" restaurantId="16515833" />

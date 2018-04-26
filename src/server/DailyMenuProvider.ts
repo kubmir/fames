@@ -4,6 +4,7 @@ import * as jsonpath from 'jsonpath';
 import Dish from '../common/Dish';
 import EspanolaMenuProvider from './EspanolaMenuProvider';
 import AlCaponeMenuProvider from './AlCaponeMenuProvider';
+import { retrieveIndiaMenu } from "./retrieveIndiaMenu";
 
 export default class DailyMenuProvider {
     private readonly zomatoUserKey: string;
@@ -22,6 +23,8 @@ export default class DailyMenuProvider {
             case 16505872:
                 const espanolaMenuProvider = new EspanolaMenuProvider();
                 return espanolaMenuProvider.getMenu();
+            case 16511911:
+                return retrieveIndiaMenu();
             default:
                 return this.getZomatoMenu(restaurantId);
         }
