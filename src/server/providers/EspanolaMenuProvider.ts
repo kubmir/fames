@@ -1,9 +1,10 @@
 import * as axios from 'axios';
 import * as cheerio from 'cheerio';
 
-import Dish from '../common/Dish';
+import Dish from '../../common/Dish';
+import {IMenuProvider} from "./IMenuProvider";
 
-export default class EspanolaMenuProvider {
+export default class EspanolaMenuProvider implements IMenuProvider {
     public getMenu(): Promise<Dish[]> {
         return new Promise<Dish[]>((resolve, reject) => {
             axios
