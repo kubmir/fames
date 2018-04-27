@@ -1,9 +1,9 @@
-import * as axios from 'axios';
-import * as jsonpath from 'jsonpath';
-
 import Dish from '../common/Dish';
-import EspanolaMenuProvider from './EspanolaMenuProvider';
-import AlCaponeMenuProvider from './AlCaponeMenuProvider';
+import EspanolaMenuProvider from './providers/EspanolaMenuProvider';
+import AlCaponeMenuProvider from './providers/AlCaponeMenuProvider';
+import { LightOfIndiaMenuProvider } from "./providers/LightOfIndiaMenuProvider";
+import {IMenuProvider} from "./providers/IMenuProvider";
+import {createZomatoMenuProvider} from "./providers/ZomatoMenuProvider";
 
 export default class DailyMenuProvider {
     private readonly zomatoUserKey: string;
@@ -17,32 +17,17 @@ export default class DailyMenuProvider {
         // Some restaurants cannot be retrieved from Zomato and are handled separately.
         switch (restaurantId) {
             case 16515833:
-                const alCaponeMenuProvider = new AlCaponeMenuProvider();
-                return alCaponeMenuProvider.getMenu();
+                return this.getMenuFrom(AlCaponeMenuProvider);
             case 16505872:
-                const espanolaMenuProvider = new EspanolaMenuProvider();
-                return espanolaMenuProvider.getMenu();
+                return this.getMenuFrom(EspanolaMenuProvider);
+            case 16511911:
+                return this.getMenuFrom(LightOfIndiaMenuProvider);
             default:
-                return this.getZomatoMenu(restaurantId);
+                const ZomatoMenuProvider = createZomatoMenuProvider(this.zomatoUserKey, restaurantId);
+                return this.getMenuFrom(ZomatoMenuProvider);
         }
     }
 
-    private getZomatoMenu(restaurantId: number): Promise<Dish[]>
-    {
-        return new Promise<Dish[]>((resolve, reject) => {
-            axios
-                .get(`https://developers.zomato.com/api/v2.1/dailymenu?res_id=${restaurantId}`,
-                {
-                    headers: {
-                        'Accept': 'application/json',
-                        'user_key': this.zomatoUserKey
-                    }
-                })
-                .then(zomatoResponse => {
-                    const dishes = jsonpath.query(zomatoResponse.data, '$.daily_menus[*].daily_menu.dishes[*].dish') as Dish[];
-                    resolve(dishes);
-                })
-                .catch(exception => reject(exception));
-        });
-    }
+    private getMenuFrom = (provider: { new(): IMenuProvider }): Promise<Dish[]> =>
+        new provider().getMenu();
 }

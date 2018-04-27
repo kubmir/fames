@@ -6,7 +6,7 @@ import DishListItem from './DishListItem';
 
 interface MenuProperties {
     restaurantName: string;
-    restaurantId: string;
+    restaurantId: number;
 }
 
 class MenuState {
