@@ -2,9 +2,9 @@
   "name": "fames",
   "version": "0.0.1",
   "description": "Lunch menu watcher",
-  "main": "./bin/server/server.js",
+  "main": "./public/server/server.js",
   "scripts": {
-    "start": "node bin/server/server.js"
+    "start": "node public/server/server.js"
   },
   "author": "Radek Petruška",
   "license": "MIT",

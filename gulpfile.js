@@ -20,7 +20,7 @@ gulp.task('server', function() {
             includeContent: false,
             sourceRoot: '../src'
         }))
-        .pipe(gulp.dest('bin'))
+        .pipe(gulp.dest('public'))
 });
 
 // Packs client side code to one file.

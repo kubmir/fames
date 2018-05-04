@@ -1,7 +1,7 @@
 module.exports = {
     entry: "./src/client/index.tsx",
     output: {
-        filename: "./dist/fames.js",
+        filename: "./public/app.js",
     },
     devtool: "source-map",
     resolve: {

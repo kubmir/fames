@@ -8,7 +8,7 @@ import DailyMenuProvider from './DailyMenuProvider'
 const zomatoUserKey: string = process.env.ZOMATO_USER_KEY || 'PUT YOUR USER KEY HERE'
 
 const server = express()
-    .use(express.static('dist'))
+    .use(express.static('public'))
     .get('(/|/index.html)', (request, response) => {
         response.sendFile(path.join(__dirname, '../../', 'index.html'));
     })
