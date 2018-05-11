@@ -19,4 +19,4 @@ export const Allergens: React.StatelessComponent<{}> = () => (
             <li>Měkkýši</li>
         </ol>
     </div>
-)
+);

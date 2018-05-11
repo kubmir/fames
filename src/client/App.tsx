@@ -8,4 +8,4 @@ export const App: React.StatelessComponent<{}> = () => (
         <Menus />
         <Allergens />
     </div>
-)
+);

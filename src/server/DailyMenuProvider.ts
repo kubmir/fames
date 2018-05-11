@@ -1,5 +1,4 @@
 import Dish from '../common/Dish';
-import EspanolaMenuProvider from './providers/EspanolaMenuProvider';
 import AlCaponeMenuProvider from './providers/AlCaponeMenuProvider';
 import { LightOfIndiaMenuProvider } from "./providers/LightOfIndiaMenuProvider";
 import {IMenuProvider} from "./providers/IMenuProvider";
@@ -18,8 +17,6 @@ export default class DailyMenuProvider {
         switch (restaurantId) {
             case 16515833:
                 return this.getMenuFrom(AlCaponeMenuProvider);
-            case 16505872:
-                return this.getMenuFrom(EspanolaMenuProvider);
             case 16511911:
                 return this.getMenuFrom(LightOfIndiaMenuProvider);
             default:

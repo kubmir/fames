@@ -16,6 +16,5 @@ export const restaurants: Restaurant[] = [
     { name: 'Al Capone', id: 16515833, distnace: 4 },
     { name: 'Divá Bára', id: 16514047, distance: 6 },
     { name: 'U Bílého beránka', id: 16506737, distance: 7 },
-    { name: 'Espaňola', id: 16505872, distance: 6 },
     { name: 'Himalaya', id: 18020959, distance: 9 },
 ].sort(sortByDistance);
